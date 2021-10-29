@@ -1,0 +1,234 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Adda - Social Network HTML Template</title>
+        <meta name="robots" content="noindex, follow">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="http://demo.hasthemes.com/adda-preview/adda/assets/images/favicon.ico">
+
+        <!-- CSS
+        ============================================ -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- google fonts -->
+        <link href="{% static 'css/css' %}" rel="stylesheet">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <!-- Icon Font CSS -->
+        <link rel="stylesheet" href="{% static 'css/bicon.min.css' %}">
+        <!-- Flat Icon CSS -->
+        <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+        <!-- audio & video player CSS -->
+        <link rel="stylesheet" href="{% static 'css/plyr.css' %}">
+        <!-- Slick CSS -->
+        <link rel="stylesheet" href="{% static 'css/slick.min.css' %}">
+        <!-- nice-select CSS -->
+        <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+        <!-- perfect scrollbar css -->
+        <link rel="stylesheet" href="{% static 'css/perfect-scrollbar.css' %}">
+        <!-- light gallery css -->
+        <link rel="stylesheet" href="{% static 'css/lightgallery.min.css' %}">
+        <!-- Main Style CSS -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script type="text/javascript" id="www-widgetapi-script" src="{% static 'css/www-widgetapi.js'%}" async=""></script><script src="{% static 'css/iframe_api' %}" async=""></script>
+    <script src="{% static 'css/iframe_api'%}" async=""></script>
+
+    <title>Document</title>
+</head>
+<body>
+     <!-- header area start -->
+     <header>
+        <div class="header-top sticky bg-white  d-lg-block">
+            <div class="container">
+
+                {%if user.is_authenticated %}
+                <div class="row align-items-center">
+                    <div class="col-md-7">
+                        <!-- header top navigation start -->
+
+                        <div class="header-top-navigation">
+                            <nav>
+                                <ul>
+                                    <li class="active"><a href="{%url 'home'%}">home</a></li>
+                                    <li class="active"><a href="{%url 'profile:friends'%}">Friends</a></li>
+                                    <li class="active"><a href="{%url 'profile:profile-detail' user.profile.id %}">Profile</a></li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle"
+                                        data-toggle="dropdown" href="#"
+                                        role="button" aria-haspopup="true"
+                                        aria-expanded="false"
+                                        > <span style="color: blue;">Notificaton</span>
+                                        <span style="color:red">({{user.profile.get_all_notifications.count}})</span></a>
+                                        <div class="dropdown-menu">
+                                            {%for notification in user.profile.get_all_notifications %}
+                                            {% if forloop.counter < 4 %}
+                                          <a class="dropdown-item" href="#">
+                                             a {{notification.status}} from {{notification.from_user}}
+                                            </a>
+                                          {%endif%}
+                                          {%endfor%}
+                                          <div class="dropdown-divider"></div>
+                                          <a class="dropdown-item" href="{%url 'profile:notification-list' %}">See All</a>
+                                        </div>
+                                      </li>
+                                      <li><a href="{%url 'logout'%}">Logout</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- header top navigation start -->
+                    </div>
+
+
+                    <div class="col-md-5">
+                        <div class="header-top-right d-flex align-items-center justify-content-end">
+                            <!-- header top search start -->
+                            <div class="header-top-search">
+                                <form action="{%url 'profile:search'%}" class="top-search-box" method="GET">
+                                    <input name ='text' type="text" placeholder="Find People" class="top-search-field">
+                                    <button class="top-search-btn"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                            <!-- header top search end -->
+
+                            <!-- profile picture start -->
+                            <div class="profile-setting-box">
+                                <div class="profile-thumb-small">
+
+                                    <a href="javascript:void(0)" class="profile-triger">
+
+                                        <figure>
+                                            <img src="{{user.profile.image.url}}" alt="profile picture">
+                                        </figure>
+
+                                    </a>
+
+                                    <div class="profile-dropdown">
+                                        <div class="profile-head">
+                                            <h5 class="name"><a href="#"><i class="fa fa-user "></i> {{user.profile.name}}</a></h5>
+                                            <a class="mail" href="#">omarcpgcbl@mail.com</a>
+                                        </div>
+                                        <div class="profile-body">
+                                            <ul>
+                                                <li><a href="{%url 'profile:profile-detail' user.profile.id%}"> <i class = "fa fa-user-circle"> </i> Profile</a></li>
+                                                <li><a href="{%url 'profile:friends' %}"><i class="fa fa-users"></i>Friends</a></li>
+                                                <li><a href="#"><i class="	fa fa-clock-o"></i>Activity</a></li>
+                                            </ul>
+                                            <ul>
+                                                <li><a href="#"><i class="fa fa-cog"></i>Setting</a></li>
+                                                <li><a href="{%url 'logout'%}"><i class="fa fa-sign-out"></i>Sing out</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- profile picture end -->
+                        </div>
+                    </div>
+                </div>
+                {%endif%}
+
+            </div>
+        </div>
+    </header>
+
+    <!-- header area end -->
+        {% block content %}
+
+    {% endblock content %}
+
+      <!-- Scroll to top start -->
+        <div class="scroll-top not-visible">
+            <i class="fa fa-arrow-circle-up"></i>
+      </div>
+
+
+
+
+      {%block scripts%}
+      {%endblock scripts%}
+      <!-- JS
+      ============================================ -->
+
+          <!-- Modernizer JS -->
+          <script src=" {% static 'js/modernizr-3.6.0.min.js' %}"></script>
+          <!-- jQuery JS -->
+          <script src=" {% static 'js/jquery-3.3.1.min.js' %}"></script>
+          <!-- Popper JS -->
+          <script src=" {% static 'js/popper.min.js' %}"></script>
+          <!-- Bootstrap JS -->
+          <script src=" {% static 'js/bootstrap.min.js' %}"></script>
+          <!-- Slick Slider JS -->
+          <script src=" {% static 'js/slick.min.js' %}"></script>
+          <!-- nice select JS -->
+          <script src=" {% static 'js/nice-select.min.js' %}"></script>
+          <!-- audio video player JS -->
+          <script src=" {% static 'js/plyr.min.js' %}"></script>
+          <!-- perfect scrollbar js -->
+          <script src=" {% static 'js/perfect-scrollbar.min.js' %}"></script>
+          <!-- light gallery js -->
+          <script src=" {% static 'js/lightgallery-all.min.js' %}"></script>
+          <!-- image loaded js -->
+          <script src=" {% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+          <!-- isotope filter js -->
+          <script src=" {% static 'js/isotope.pkgd.min.js' %}"></script>
+          <!-- Main JS -->
+          <script src=" {% static 'js/main.js' %}"></script>
+      <script>
+      $('.post-id').submit(function (e) {
+          e.preventDefault()
+          console.log('ok')
+
+             const id= $(this).attr('id')
+             url = $(this).attr('action')
+             $.ajax({
+                          type: 'POST',
+                          url: url,
+                          data: {
+                              'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                              'id':id,
+                          },
+                          success: function(data) {
+
+                              console.log(data.id,data.like_btn)
+
+
+
+
+
+                              $(`#total-likes${data.id}`).text(data.total_likes);
+                              if (data.like_btn == 'Up') {
+
+                                  $(`.like-post${data.id}>i`).removeClass('fa fa-thumbs-o-down').addClass('fa fa-thumbs-o-up');
+                              }
+                              if (data.like_btn == 'Down') {
+
+                                  $(`.like-post${data.id}>i`).removeClass('fa fa-thumbs-o-up').addClass('fa fa-thumbs-o-down');
+                              }
+                              }
+
+
+
+
+
+
+          });
+      });
+      </script>
+
+    </body>
+</html>
+
+
+
+

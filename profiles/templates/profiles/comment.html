@@ -1,0 +1,33 @@
+
+
+<br>
+<form action="{%url 'post:new-comment'%}" class="cm-form"  method="POST">
+{%csrf_token%}
+    <textarea style="border-radius: 10px; border:solid ;" class = " col"name="cmt_txt"placeholder="Add a comment"></textarea>
+    <input type="hidden" name="post_id" value="{{post.id}}" >
+<button type="submit" class="post-share-btn" style="margin-bottom: 10px;">submit</button>
+</form>
+
+
+
+    {%for comment in post.comment_set.all%}
+    <div class="comment-area border rounded card" style="box-shadow: none;">
+        <p class="font-italic">{{comment.created|timesince}}</p>
+<p class="font-weight-bold">{{comment.author}}</p>
+<p class="font-weight-normal">{{comment.body}}</p>
+
+<div class="btn-group">
+    <button type="submit" class="post-share-btn" style="background-color: darkblue;">Edit</button>
+    <button type="submit" class="post-share-btn"style="background-color:red;">Delete</button>
+</div>
+
+    
+
+</div>
+    {%endfor%}
+
+
+
+
+
+

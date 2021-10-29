@@ -1,0 +1,91 @@
+{%load static%}
+                  <!-- post status start -->
+
+
+                  <div class="card">
+                      <!-- post title start -->
+                      <div class="post-title d-flex align-items-center">
+                          <!-- profile picture end -->
+                          <div class="profile-thumb">
+                              <a href="{{post.author.profile.get_absolute_url}}">
+                                  <figure class="profile-thumb-middle">
+                                      <img src="{%static 'images/profile-small-1.jpg'%}" alt="profile picture">
+                                  </figure>
+                              </a>
+                          </div>
+                          <!-- profile picture end -->
+
+                          <div class="posted-author">
+                              <h6 class="author"><a href= "{{post.author.profile.get_absolute_url}}">{{post.author}}</a></h6>
+                              <span class="post-time">{{post.created|timesince}} ago</span>
+                          </div>
+                             
+                          <div class="post-settings-bar">
+                          <i class="fa fa-ellipsis-h fa-lg" aria-hidden="true"></i>
+
+                        
+                                
+                              <div class="post-settings arrow-shape">
+                                  <ul>
+                                      <li>  <button><a href="{%url 'post:post-update' post.id  %}">Edit</a></button></li>
+                                      <li>  <button><a href="{%url 'post:post-delete' post.id  %}">Delete</a></button></li>
+                                  </ul>
+                              </div>
+                       
+                          </div>
+                      </div>
+                      <!-- post title start -->
+                      <div class="post-content">
+                          <p class="post-desc">
+                            {{post.body}}
+
+                          </p>
+
+                          <div class="post-thumb-gallery">
+                              <figure class="post-thumb img-popup">
+                                   {% if post.image%}
+
+                                      <img src="{{post.image.url}}" alt="post image">
+                                        {%endif%}
+
+                              </figure>
+
+
+                          </div>
+                          <div class="post-meta">
+
+                                  <form class='post-id' id={{post.id}}  method="POST"   action="{%url 'post:add-remove-likes' %} ">
+                                      {% csrf_token %}
+
+                                    {%if user in post.get_all_likers%}
+                                  <button  type="submit" class='like-post{{post.id}}' >
+
+                                <i class="fa fa-thumbs-o-down" ></i>
+                                </button>
+                                {%else%}
+                                <button type="submit" class='like-post{{post.id}}'>
+
+                                    <i class="fa fa-thumbs-o-up"></i>
+
+
+
+                                    </button>
+                                    {%endif%}
+                                    <span style="padding: 2px;">
+                                        <strong id = 'total-likes{{post.id}}'>
+                                            {{post.get_total_likes}}
+
+
+                                        </strong>
+                                        people like this
+                                        </span>
+
+
+                                </form>
+                          </div>
+
+                          {%include 'profiles/comment.html'%}
+                      </div>
+
+                  </div>
+                  <!-- post status end -->

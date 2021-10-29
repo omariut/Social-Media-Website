@@ -1,0 +1,195 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main>
+
+  <div class="main-wrapper pt-80">
+      <div class="container">
+          <div class="row">
+
+              <div class="col-lg-3 order-2 order-lg-1">
+
+                  <aside class="widget-area">
+                      <!-- widget single item start -->
+                      <div class="card card-profile widget-item p-0">
+                          <div class="profile-banner">
+                              <figure class="profile-banner-small">
+                                  <a href= {{user.profile.get_absolute_url}}>
+                                      <img src="{%static 'images/banner-small.jpg'%}" alt="" >
+                                  </a>
+                                  <a href="{{user.profile.get_absolute_url}}" class="profile-thumb-2">
+                                      <img src="{{user.profile.image.url}}" alt="">
+                                  </a>
+                              </figure>
+                              <div class="profile-desc text-center">
+                                  <h6 class="author"><a href="{{user.profile.get_absolute_url}}">{{user}}</a></h6>
+                                  <p>Bio</p>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- widget single item start -->
+                  <div class="card widget-item">
+                          <h4 class="widget-title">Friends</h4>
+                          <div class="widget-body">
+                              <ul class="like-page-list-wrapper">
+                              {%for profile in user.profile.get_friend_list%}
+
+
+                                  <li class="unorder-list">
+                                      <!-- profile picture end -->
+                       {%include 'profiles/profile-picture.html' %}
+                                      <!-- profile picture end -->
+
+                                      <div class="unorder-list-info">
+                                          <h3 class="list-title"><a href="{{profile.get_absolute_url}}">{{profile.name|title}}</a></h3>
+                                          <p class="list-subtitle">Bio</p>
+
+                                        <form name="friend_id" action="{%url 'profile:add-remove-friend'%}" method="POST" value="{{profile.id}}" >
+                                            <input  name = 'id' type="hidden" value="{{profile.id}}" >
+                                            {% csrf_token %}
+                                            <button type="submit" class="post-share-btn" style=" background-color:rgb(90, 90, 182);">Remove</button>
+                                    </form>
+                                      </div>
+
+
+
+                                  </li>
+                                  {%endfor%}
+
+                              </ul>
+                          </div>
+                      </div></aside>
+              </div>
+
+              <div class="col-lg-6 order-1 order-lg-2">            <!-- share box start -->
+                  {% include 'profiles/share-box.html' %}
+                  <!-- share box end -->
+{%if user.is_anonymous %}
+<div style="font-size:large">
+ <p  style="font-size: xx-large";>Click <a href="{%url 'login'%}">here </a> to login</p>
+ <p> username and password are available in login page. </p>
+ <p> Thank You for exploring this site. <i class="fa fa-smile-o" aria-hidden="true"></i> </p>
+ <p> contact: omarcpgcbl@gmail.com <br>whatsapp: 01787553318 <br> call : 01683560152</p>
+ </div>
+ {%endif%}
+
+<div class="reload">
+                  <!-- post status start -->
+
+                  {% for post in user.profile.get_friends_posts|dictsortreversed:"created"  %}
+ {% include 'profiles/post.html' %}
+
+                  <!-- post status end -->
+
+{%endfor%}
+              </div>
+            </div>
+              <div class="col-lg-3 order-3">
+                  <aside class="widget-area">
+                      <!-- widget single item start -->
+
+                      <!-- widget single item end -->
+
+                      <!-- widget single item start -->
+
+                      <!-- widget single item end -->
+
+                      <!-- widget single item start -->
+                      <div class="card widget-item">
+                          <h4 class="widget-title">Friend Requests</h4>
+                          <div class="widget-body">
+                              <ul class="like-page-list-wrapper">
+
+                               {% for user in user.profile.get_request_rcv_list %}
+
+
+
+
+                                  <li class="unorder-list">
+                                      <!-- profile picture end -->
+                                      <div class="profile-thumb">
+    <a href="#">
+        <figure class="profile-thumb-middle">
+            <img src="{{user.profile.image.url}}" alt="profile picture">
+        </figure>
+    </a>
+</div>
+                                      <!-- profile picture end -->
+
+                                      <div class="unorder-list-info">
+                                          <h3 class="list-title"><a href="{{user.profile.get_absolute_url}}">{{user.profile.name}}</a></h3>
+                                          <p class="list-subtitle"><a href={{user.profile.get_absolute_url}}></a></p>
+                                          <form method="GET"  action="{%url 'profile:accept-reject-request'%}">
+                                          <div class="btn-group" style="right: 30px; top:20px">
+                                            <input type="hidden" name='id' value={{user.id}}>
+
+
+                                            <button name='button' value='accept' type="submit" class="post-share-btn" style="background-color: rgb(90, 90, 182);"><i class="fa fa-check" aria-hidden="true"></i></button>
+
+                                            <button name='button' value='reject' type="submit" class="post-share-btn" style="background-color: crimson;"><i class="fa fa-window-close" aria-hidden="true"></i></button>
+
+                                        </div>
+                                    </form>
+                                      </div>
+
+
+                                  </li>
+                                  {%endfor%}
+
+                              </ul>
+                          </div>
+                      </div>
+                      <!-- widget single item end -->
+                  <div class="card widget-item">
+                          <h4 class="widget-title">Suggestion</h4>
+                          <div class="widget-body">
+                              <ul class="like-page-list-wrapper">
+
+                                {%for profile in user.profile.get_friends_of_friends %}
+
+
+                                  <li class="unorder-list">
+                                      <!-- profile picture end -->
+                                      {%include 'profiles/profile-picture.html' %}
+                                      <!-- profile picture end -->
+
+                                      <div class="unorder-list-info">
+                                        <h3 class="list-title"><a href="{{profile.get_absolute_url}}">{{profile.name}}</a></h3>
+                                        <p class="list-subtitle">Bio</p>
+                                        <div class="btn-group" style="right: 20px;">
+                                        <form action="{%url 'profile:friend-request'%}" method="POST">
+                                            <input  name = 'id' type="hidden" value="{{profile.user.id}}" >
+                                            {% csrf_token %}
+
+
+
+
+                                            {% if profile.user in user.profile.get_request_sent_list %}
+                                            <button type="submit" class="post-share-btn" style="background-color: rgb(90, 90, 182);">Cancel</button>
+
+                                            {%else%}
+                                             <button type="submit" class="post-share-btn" style="background-color: rgb(90, 90, 182);">Add</button>
+                                            {%endif%}
+
+
+
+
+                                        </form>
+                                    </div>
+                                      </div>
+                                  </li>
+                                  {%endfor%}
+
+                              </ul>
+                          </div>
+                      </div></aside>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</main>
+
+{% endblock %}

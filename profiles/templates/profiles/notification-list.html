@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{%for notification in notification_list %}
+
+{% if user == notification.to_user %}
+<a class="dropdown-item" href="#">
+ a {{notification.status}} from {{notification.from_user}}
+</a>
+{%endif%}
+
+{%endfor%}
+
+{%endblock%}
+     
+              

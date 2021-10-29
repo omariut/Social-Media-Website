@@ -1,0 +1,60 @@
+
+<br>
+<br>
+<br>
+
+          <div class="card card-small">
+                      <div class="share-box-inner">
+                          <!-- profile picture end -->
+                          <div class="profile-thumb">
+                              <a href="http://demo.hasthemes.com/adda-preview/adda/index.html#">
+                                  <figure class="profile-thumb-middle">
+                                      <img src="{{user.profile.image.url}}" alt="profile picture">
+                                  </figure>
+                              </a>
+                          </div>                          <!-- profile picture end -->
+
+                          <!-- share content box start -->
+                          <div class="share-content-box w-100">
+
+                              <form class="share-text-box">
+                                  <textarea name="share" class="share-text-field" aria-disabled="true" placeholder="Say Something" data-toggle="modal" data-target="#textbox" id="email"></textarea>
+                                  <button class="btn-share" type="submit">share</button>
+                              </form>
+                          </div>
+                          <!-- share content box end -->
+
+                          <!-- Modal start -->
+                          <div class="modal fade" id="textbox" aria-labelledby="textbox">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title">Share Your Mood</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">×</span>
+                                          </button>
+                                      </div>
+
+                                      <div class="modal-body custom-scroll ps">
+
+                                        <form action="{%url 'post:new-post'%}" method="POST" enctype="multipart/form-data">
+
+                                            {% csrf_token %}
+                                            <label for="id_image">Image:</label>
+                                            <input type="file" name="image" accept="image/*" id="id_image">
+
+                                            <textarea name="body" class="share-field-big custom-scroll ps" placeholder="Say Something" class="ps__rail-x" style="left: 0px; bottom: 3px;"  required id="id_body"></textarea>
+
+
+                                      <div class="ps__rail-x" style="left: 0px; bottom: 3px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 2px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 3px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 2px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div><div class="ps__rail-x" style="left: 0px; bottom: 3px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 2px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="post-share-btn" data-dismiss="modal">cancel</button>
+                                          <button type="submit" class="post-share-btn">post</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                              </div>
+                          </div>
+                          <!-- Modal end -->
+                      </div>
+                  </div>

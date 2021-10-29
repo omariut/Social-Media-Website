@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+ {% block content %}
+ {{ form.non_field_errors }}
+{{non_field_errors}}
+<div class="main-wrapper pt-80">
+      <div class="container">
+          <div class="row">
+      
+            <form action="" method="POST" class="ui form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+            <button type='submit' class="edit-btn">Update</button>
+        </form>
+    {% endblock content %}
+    </div>
+      </div>
+        </div>

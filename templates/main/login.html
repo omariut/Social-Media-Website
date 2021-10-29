@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+ {% block content %}
+<div class="main-wrapper pt-80">
+      <div class="container">
+          <div class="row">
+
+            <form action="" method="POST" class="ui form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+            <p> username: 'guestuser' or 'testuser1' or 'testuser2' or 'testuser3' or 'testuser4'   </p>
+             <p>password: 12  </p>
+
+
+
+
+            <button type='submit' class="edit-btn">Login</button>
+        </form>
+    {% endblock content %}
+    </div>
+      </div>
+        </div>
